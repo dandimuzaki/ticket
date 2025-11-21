@@ -17,6 +17,7 @@ func main() {
 	res, err := handler.GetTicket(req)
 	if err != nil {
 		fmt.Printf("Ada kesalahan: %v\n", err)
+	} else {
+		fmt.Printf("=== Harga Tiket ===\nPenumpang : %s\nTujuan    : %s\nHarga     : %.2f\n===================", res.Penumpang, res.Tujuan, res.Harga)
 	}
-	fmt.Printf("=== Harga Tiket ===\nPenumpang : %s\nTujuan    : %s\nHarga     : %.2f\n===================", res.Penumpang, res.Tujuan, res.Harga)
 }
