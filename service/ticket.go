@@ -18,15 +18,15 @@ func NewTicketService() TicketService {
 }
 
 // method get harga
-func (ticketService *TicketService) GetTicket(req dto.NewRequest) (dto.NewResponse, error) {
+func (ticketService *TicketService) GetTicket(req dto.NewRequest) (model.Ticket, error) {
 	if strings.TrimSpace(req.Penumpang) == "" ||
 		strings.TrimSpace(req.Tujuan) == "" {
-			return dto.NewResponse{}, errors.New("penumpang dan tujuan harus diisi")
+			return model.Ticket{}, errors.New("penumpang dan tujuan harus diisi")
 		}
 	
 	destination, err := utils.StringToMap(data.Destination)
 	if err != nil {
-		return dto.NewResponse{}, errors.New("tidak bisa mengakses data")
+		return model.Ticket{}, errors.New("tidak bisa mengakses data")
 	}
 
 	found := false
@@ -37,7 +37,7 @@ func (ticketService *TicketService) GetTicket(req dto.NewRequest) (dto.NewRespon
 	}
 
 	if !found {
-		return dto.NewResponse{}, errors.New("tujuan tidak ditemukan")
+		return model.Ticket{}, errors.New("tujuan tidak ditemukan")
 	}
 
 	ticket := model.Ticket{
@@ -46,11 +46,5 @@ func (ticketService *TicketService) GetTicket(req dto.NewRequest) (dto.NewRespon
 		Harga: destination[req.Tujuan],
 	}
 
-	res := dto.NewResponse{
-		Penumpang: ticket.Penumpang,
-		Tujuan: ticket.Tujuan,
-		Harga: ticket.Harga,
-	}
-
-	return res, nil
+	return ticket, nil
 }

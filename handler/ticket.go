@@ -24,5 +24,11 @@ func (ticketHandler *TicketHandler) GetTicket(req dto.NewRequest) (dto.NewRespon
 		return dto.NewResponse{}, err
 	}
 
-	return ticket, nil
+	res := dto.NewResponse{
+		Penumpang: ticket.Penumpang,
+		Tujuan: ticket.Tujuan,
+		Harga: ticket.Harga,
+	}
+
+	return res, nil
 }
